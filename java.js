@@ -1,0 +1,1 @@
+import products from './data-minified.json' with { type: 'json'};
