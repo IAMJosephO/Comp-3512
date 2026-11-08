@@ -44,7 +44,7 @@ for (let product of products) {
         })
 
         img.addEventListener('click', () => {
-            alert("The Product ID is " + product.id)
+            alert("This product's ID is " + product.id)
         })
 
         productBox.appendChild(img)
