@@ -40,7 +40,7 @@ for (let product of products) {
         btn.textContent = '+'
 
         btn.addEventListener('click', () => {
-            alert("Item Added to Cart! " + product.id + ", " + product.title)
+            alert("Product ID: " + product.id + "\nProduct Title: " + product.title)
         })
 
         img.addEventListener('click', () => {
