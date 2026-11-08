@@ -1,4 +1,4 @@
-import config from './data-minifed.json' with { type: 'json'};
+import config from './data-minifed.json' with { type: 'json' };
 
 function $(selector) {
     return document.querySelector(selector)
@@ -12,7 +12,7 @@ function _(tag) {
     return document.createElement(tag)
 }
 
-const products = data.products
+const products = config.products
 const productList = $("#productList")
 
 let display = 0
