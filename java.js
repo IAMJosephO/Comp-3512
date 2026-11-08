@@ -21,10 +21,25 @@ for (let product of products) {
 
     const img = _('img')
     img.setAttribute('src', product.thumbnail)
-    img.setAttribute('src', product.title)
+    img.setAttribute('alt', product.title)
     img.classList.add('thumbnail')
 
-    const info = _('div')
+    const title = _('p')
+    title.classList.add('productTitle')
+    title.textContent = product.title;
+
+    const price = _('p')
+    price.classList.add('productPrice')
+    price.textContent = '$' + product.price
+
+    const btn = _('button')
+    btn.classList.add('btn')
+    btn.textContent = '+'
+
+    btn.addEventListener('click', () => {
+        alert("Item Added to Cart! " + product.id + ", " + product.title)
+    })
+
 
 
 }
