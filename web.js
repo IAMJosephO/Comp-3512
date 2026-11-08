@@ -1,4 +1,4 @@
-import data from './data-minified.json' with { type: 'json'};
+import data from '../data-minifed.json' with { type: 'json'};
 
 function $(selector) {
     return document.querySelector(selector)
