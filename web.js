@@ -1,4 +1,4 @@
-import config from './data-minifed.json' with { type: 'json' };
+import config from './data/data-minifed.json' with { type: 'json' };
 
 function $(selector) {
     return document.querySelector(selector)
