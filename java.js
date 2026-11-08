@@ -30,7 +30,7 @@ for (let product of products) {
 
     const price = _('p')
     price.classList.add('productPrice')
-    price.textContent = '$' + product.price
+    price.textContent = '$' + product.price.toFixed(2)
 
     const btn = _('button')
     btn.classList.add('btn')
@@ -40,6 +40,15 @@ for (let product of products) {
         alert("Item Added to Cart! " + product.id + ", " + product.title)
     })
 
+    img.addEventListener('click', () => {
+        alert(product.id)
+    })
+
+    productBox.appendChild(img)
+    productBox.appendChild(title)
+    productBox.appendChild(price)
+    productBox.appendChild(btn)
+    productList.appendChild(productBox)
 
 
 }
