@@ -4,26 +4,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width , initial-scale=1.0">
-    <title> COMP 3512 Assignment 1</title>
+    <title> Corner Cart</title>
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="web.js">
     </script>
 </head>
 
 <body>
-    <main>
-        <h1>Browse</h1>
-        <section id="productList">
+    <header>
+        <a href="#home" class="navLink">Corner Cart</a>
+        <nav>
+            <a href="#home" class="navLink">Home</a>
+            <a href="#browse" class="navLink">Browse</a>
+            <a href="#about" id="aboutLink">About</a>
+        </nav>
+        <a href="#cart" class="navLink">Cart
+            <span id="cartCount">0</span>
+        </a>
+    </header>
 
+    <main>
+        <section id="home" class="view">
+            <h1>Home</h1>
         </section>
+
+        <section id="browse" class="view hide">
+            <h1>Browse</h1>
+            <section id="productList"></section>
+        </section>
+
+        <section id="cart" class="view hide">
+            <h1>Shopping Cart</h1>
+        </section>
+
+        <section id="singleProduct" class="view hide">
+            <h1>Single Product</h1>
+        </section>
+
     </main>
     <footer>
         <p>&copy; Joseph Ochan</p>
         <nav>
-            <a href="https://github.com/IAMJosephO/Comp-3512.git" target="_blank">GitHub</a>
-            <a href="#" id="aboutLink">About</a>
+            <a href="https://github.com/IAMJosephO/Comp-3512" target="_blank">GitHub</a>
+            <a href="#about" id="aboutLinkFooter">About</a>
         </nav>
     </footer>
+
+    <dialog id="about">
+        <h2> About Corner Cart</h2>
+        <p>Corner Cart: Online shopping store; COMP 3512 Assignment 2</p>
+        <p>Why go to a corner store when you now have one in your hands!</p>
+        <p>Technologies: Javascript, CSS, HTML</p>
+        <p><a href="https://github.com/IAMJosephO/Comp-3512" target="_blank">GitHub Repository</a></p>
+        <button>Close</button>
+    </dialog>
 </body>
 
 </html>

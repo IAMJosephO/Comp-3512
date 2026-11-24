@@ -58,3 +58,35 @@ for (let product of products) {
     }
 
 }
+
+// function to switch views
+//    function showView(viewName){
+//     for (const view of navLink)
+//    }
+
+function showView(viewName) {
+    const views = $$(".view")
+
+    for (const view of views) {
+        view.classList.add("hide")
+    }
+
+    //show what we actually want 
+    const sel = "#" + viewName
+    const viewToShow = $(sel)
+    viewToShow.classList.remove("hide")
+}
+
+
+const links = $$(".navLink")
+
+for (const link of links) {
+    link.addEventListener("click", (event) => {
+        event.preventDefault()
+        const viewName = link.getAttribute("href")
+        showView(viewName)
+    })
+}
+
+
+
