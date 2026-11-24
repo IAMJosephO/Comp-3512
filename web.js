@@ -86,38 +86,79 @@ for (const link of links) {
         const viewName = link.getAttribute("href").substring(1)
         showView(viewName)
     })
+}
+
+// close about section button
+
+const about = $("#about")
+const aboutLink = $("#aboutLink")
+const aboutLinkFooter = $("#aboutLinkFooter")
+const closeButtonAbout = $("#closeButtonAbout")
+
+aboutLink.addEventListener("click", (event) => { //open from header linker
+    event.preventDefault()
+    about.classList.remove("hide")
+})
+
+// open from footer
+
+aboutLinkFooter.addEventListener("click", (event) => {
+    event.preventDefault()
+    about.classList.remove("hide")
+})
+
+closeButtonAbout.addEventListener("click", (event) => { // close section button
+    about.classList.add("hide")
+})
 
 
+// home page for the 3 items that is being shown
+function showFeatured() {
+    const featured = $("#featured")
 
-    // close about section button
+    let featuredCount = 0
 
-    const about = $("#about")
-    const aboutLink = $("#aboutLink")
-    const aboutLinkFooter = $("#aboutLinkFooter")
-    const closeButtonAbout = $("#closeButtonAbout")
+    for (let product of products) {
+        if (featuredCount < 3) {
+            const productBox = _('article')
+            productBox.classList.add('box')
 
-    aboutLink.addEventListener("click", (event) => { //open from header linker
-        event.preventDefault()
-        about.classList.remove("hide")
-    })
+            const img = _('img')
+            img.setAttribute('src', product.thumbnail)
+            img.setAttribute('alt', product.title)
+            img.classList.add('thumbnail')
 
-    // open from footer
+            const title = _('p')
+            title.classList.add('productTitle')
+            title.textContent = product.title;
 
-    aboutLinkFooter.addEventListener("click", (event) => {
-        event.preventDefault()
-        about.classList.remove("hide")
-    })
+            const price = _('p')
+            price.classList.add('productPrice')
+            price.textContent = '$' + product.price.toFixed(2)
 
-    closeButtonAbout.addEventListener("click", (event) => { // close section button
-        about.classList.add("hide")
-    })
+            const btn = _('button')
+            btn.classList.add('btn')
+            btn.textContent = '+'
 
+            btn.addEventListener('click', () => {
+                alert("Product ID: " + product.id + "\nProduct Title: " + product.title)
+            })
 
+            img.addEventListener('click', () => {
+                alert("This product's ID is " + product.id)
+            })
 
+            productBox.appendChild(img)
+            productBox.appendChild(title)
+            productBox.appendChild(price)
+            productBox.appendChild(btn)
+            featured.appendChild(productBox)
 
+            featuredCount += 1
 
+        }
+    }
 
 }
 
-
-
+showFeatured() // bruh it had to be called, took me long for no reason
