@@ -20,3 +20,8 @@ main {
 .hide {
     display: none;
 }
+
+dialog {
+    display: block;
+    padding: 20px;
+}
