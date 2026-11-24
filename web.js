@@ -83,9 +83,37 @@ const links = $$(".navLink")
 for (const link of links) {
     link.addEventListener("click", (event) => {
         event.preventDefault()
-        const viewName = link.getAttribute("href")
+        const viewName = link.getAttribute("href").substring(1)
         showView(viewName)
     })
+
+
+
+    // close about section button
+
+    const about = $("#about")
+    const aboutLink = $("#aboutLink")
+    const aboutLinkFooter = $("#aboutLinkFooter")
+    const closeButtonAbout = $("#closeButtonAbout")
+
+    aboutLink.addEventListener("click", (event) => { //open from header linker
+        event.preventDefault()
+        about.classList.remove("hide")
+    })
+
+    // open from footer
+
+    aboutLinkFooter.addEventListener("click", (event) => {
+        event.preventDefault()
+        about.classList.remove("hide")
+    })
+
+    closeButtonAbout.addEventListener("click", (event) => { // close section button
+        about.classList.add("hide")
+    })
+
+
+
 }
 
 
