@@ -159,6 +159,61 @@ function showFeatured() {
         }
     }
 
+    // single product
+    function showProduct(id) {
+        let product
+
+        for (let p of products) {
+            if (p.id === id) {
+                product = p
+            }
+        }
+
+        $("#breadcrumb").textContent = "Home > " + product.category + " > " + product.title
+        $("#detailImage").setAttribute("src", product.image[0])
+        $("#detailImage").setAttribute("alt", product.title)
+        $("#detailTite").textContent = product.title
+        $("#detailPrice").textContent = "$" + product.price.toFixed(2)
+        $("#detailSku").textContent = "SKU: " + product.sku + " " + makeStar(product.rating)
+        $("#detailDescription").textContent = product.description
+        $("#quantity").value = 1
+
+        // stock
+        if (product.stock > 0) {
+            $("#detailStock").textContent = "In Stock"
+        } else {
+            $("#detailStock").textContent = "Out of Stock"
+        }
+
+        // specifications section
+        $("#weight").textContent = "Weight: " + product.weight + "1b"
+        $("#dimensions").textContent = "Dimensions: " + product.dimensions.width + " x "
+            + product.dimensions.height + " x " + product.dimensions.depth + " cm"
+        $("#shippingInfo").textContent = "Shipping: " + product.shippingInformation
+        $("#returnPolicy").textContent = "Return Policy: " + product.returnPolicy
+
+        // review section
+
+
+
+    }
+
+    function makeStar(rating) {
+        if (rating >= 4.5) {
+            return "★★★★★"
+        } else if (rating >= 3.5) {
+            return "★★★★☆ "//1 empty
+        } else if (rating >= 2.5) {
+            return "★★★☆☆" // 2 empty
+        } else if (rating >= 1.5) {
+            return "★★☆☆☆" // 3 empty
+        } else if (rating >= 0.5) {
+            return "★☆☆☆☆" // 4 empty
+        } else {
+            return "☆☆☆☆☆" // 5 empty
+        }
+    }
+
 }
 
 showFeatured() // bruh it had to be called, took me long for no reason
