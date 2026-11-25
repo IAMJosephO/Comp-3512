@@ -193,7 +193,59 @@ function showFeatured() {
         $("#returnPolicy").textContent = "Return Policy: " + product.returnPolicy
 
         // review section
+        review.textContent = ""
+        for (let review of product.reviews) {
+            const reviewBox = _("div")
+            reviewBox.classList.add("review")
 
+            const stars = _("p")
+            stars.classList.add("starts")
+            stars.textContent = makeStar(review.rating)
+
+            const comment = _("p")
+            comment.textContent = review.comment
+
+            const name = _("p")
+            const date = review.date.substring(0, 10)
+            name.textContent = review.reviewerName + " - " + date
+
+            reviewBox.appendChild(star)
+            reviewBox.appendChild(comment)
+            reviewBox.appendChild(name)
+            review.appendChild(reviewBox)
+        }
+
+        // tags
+        const tagBox = $("#detailTags")
+        tagBox.textContent = ""
+        for (let tag of product.tag) {
+            const pill = _("span")
+            pill.classList.add("pill")
+            pill.textContent = tag
+            tagBox.appendChild(pill)
+        }
+
+        let currentProductId // needs this for the actual product for the view
+
+        const specsTab = $("#specifiTab")
+        const reviewTab = $("#reviewTab")
+        const specs = $("#specs")
+        const reviews = $("#reviews")
+        // tabs
+
+
+        function showSpecsTab() {
+            specs.classList.remove("hide")
+            reviews.classList.add("hide")
+        }
+
+        function showReviewTab() {
+            reviews.classList.remove("hide")
+            specs.classList.add("hide")
+        }
+
+        specsTab.addEventListener("click", showSpecsTab)
+        reviewTab.addEventListener("click", showReviewTab)
 
 
     }
