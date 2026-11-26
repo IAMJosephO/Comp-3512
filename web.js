@@ -28,6 +28,7 @@ for (let product of products) {
         img.classList.add('thumbnail')
 
         const title = _('p')
+        title.setAttribute('href', '#singleProduct')
         title.classList.add('productTitle')
         title.textContent = product.title;
 
@@ -44,7 +45,7 @@ for (let product of products) {
         })
 
         img.addEventListener('click', () => {
-            alert("This product's ID is " + product.id)
+            showProduct(product.id)
         })
 
         productBox.appendChild(img)
@@ -128,7 +129,8 @@ function showFeatured() {
             img.setAttribute('alt', product.title)
             img.classList.add('thumbnail')
 
-            const title = _('p')
+            const title = _('a')
+            title.setAttribute('href', "#singleProduct")
             title.classList.add('productTitle')
             title.textContent = product.title;
 
@@ -145,7 +147,12 @@ function showFeatured() {
             })
 
             img.addEventListener('click', () => {
-                alert("This product's ID is " + product.id)
+                showProduct(product.id)
+            })
+
+            title.addEventListener("click", (event) => {
+                event.preventDefault()
+                showProduct(product.id)
             })
 
             productBox.appendChild(img)
@@ -160,7 +167,33 @@ function showFeatured() {
     }
 
     // single product
+
+    let currentProductId // needs this for the actual product for the view 
+
+
+    const specsTab = $("#specifiTab")
+    const reviewTab = $("#reviewTab")
+    const specs = $("#specs")
+    const reviews = $("#reviews")
+    // tabs
+
+    function showSpecsTab() {
+        specs.classList.remove("hide")
+        reviews.classList.add("hide")
+    }
+
+    function showReviewTab() {
+        reviews.classList.remove("hide")
+        specs.classList.add("hide")
+    }
+
+    specsTab.addEventListener("click", showSpecsTab)
+    reviewTab.addEventListener("click", showReviewTab)
+
+
     function showProduct(id) {
+        currentProductId = id
+
         let product
 
         for (let p of products) {
@@ -170,9 +203,9 @@ function showFeatured() {
         }
 
         $("#breadcrumb").textContent = "Home > " + product.category + " > " + product.title
-        $("#detailImage").setAttribute("src", product.image[0])
+        $("#detailImage").setAttribute("src", product.images[0])
         $("#detailImage").setAttribute("alt", product.title)
-        $("#detailTite").textContent = product.title
+        $("#detailTitle").textContent = product.title
         $("#detailPrice").textContent = "$" + product.price.toFixed(2)
         $("#detailSku").textContent = "SKU: " + product.sku + " " + makeStar(product.rating)
         $("#detailDescription").textContent = product.description
@@ -186,20 +219,21 @@ function showFeatured() {
         }
 
         // specifications section
-        $("#weight").textContent = "Weight: " + product.weight + "1b"
+        $("#weight").textContent = "Weight: " + product.weight + " lb"
         $("#dimensions").textContent = "Dimensions: " + product.dimensions.width + " x "
             + product.dimensions.height + " x " + product.dimensions.depth + " cm"
+        $("#warranty").textContent = "Warranty: " + product.warrantyInformation
         $("#shippingInfo").textContent = "Shipping: " + product.shippingInformation
         $("#returnPolicy").textContent = "Return Policy: " + product.returnPolicy
 
         // review section
-        review.textContent = ""
+        reviews.textContent = ""
         for (let review of product.reviews) {
             const reviewBox = _("div")
             reviewBox.classList.add("review")
 
             const stars = _("p")
-            stars.classList.add("starts")
+            stars.classList.add("stars")
             stars.textContent = makeStar(review.rating)
 
             const comment = _("p")
@@ -209,43 +243,24 @@ function showFeatured() {
             const date = review.date.substring(0, 10)
             name.textContent = review.reviewerName + " - " + date
 
-            reviewBox.appendChild(star)
+            reviewBox.appendChild(stars)
             reviewBox.appendChild(comment)
             reviewBox.appendChild(name)
-            review.appendChild(reviewBox)
+            reviews.appendChild(reviewBox)
         }
 
         // tags
         const tagBox = $("#detailTags")
         tagBox.textContent = ""
-        for (let tag of product.tag) {
-            const pill = _("span")
-            pill.classList.add("pill")
-            pill.textContent = tag
-            tagBox.appendChild(pill)
+        for (let tag of product.tags) {
+            const tagItem = _("span")
+            tagItem.classList.add("tagItem")
+            tagItem.textContent = tag
+            tagBox.appendChild(tagItem)
         }
 
-        let currentProductId // needs this for the actual product for the view
-
-        const specsTab = $("#specifiTab")
-        const reviewTab = $("#reviewTab")
-        const specs = $("#specs")
-        const reviews = $("#reviews")
-        // tabs
-
-
-        function showSpecsTab() {
-            specs.classList.remove("hide")
-            reviews.classList.add("hide")
-        }
-
-        function showReviewTab() {
-            reviews.classList.remove("hide")
-            specs.classList.add("hide")
-        }
-
-        specsTab.addEventListener("click", showSpecsTab)
-        reviewTab.addEventListener("click", showReviewTab)
+        showSpecsTab()
+        showView("singleProduct")
 
 
     }
@@ -254,7 +269,7 @@ function showFeatured() {
         if (rating >= 4.5) {
             return "★★★★★"
         } else if (rating >= 3.5) {
-            return "★★★★☆ "//1 empty
+            return "★★★★☆"//1 empty
         } else if (rating >= 2.5) {
             return "★★★☆☆" // 2 empty
         } else if (rating >= 1.5) {
