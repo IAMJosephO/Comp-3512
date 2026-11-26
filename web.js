@@ -1,5 +1,4 @@
-import config from './data/data-minifed.json' with { type: 'json' };
-
+// import config from './data/data-minifed.json' with { type: 'json' };
 function $(selector) {
     return document.querySelector(selector)
 }
@@ -12,7 +11,8 @@ function _(tag) {
     return document.createElement(tag)
 }
 
-const products = config.products
+// const products = config.products
+let products = []
 const productList = $("#productList")
 
 let display = 0
@@ -49,6 +49,11 @@ for (let product of products) {
             showProduct(product.id)
         })
 
+        title.addEventListener("click", (event) => {
+            event.preventDefault()
+            showProduct(product.id)
+        })
+
         productBox.appendChild(img)
         productBox.appendChild(title)
         productBox.appendChild(price)
@@ -60,6 +65,11 @@ for (let product of products) {
     }
 
 }
+
+// cart section
+let cart = []
+
+
 
 // function to switch views
 //    function showView(viewName){
@@ -241,7 +251,7 @@ function showProduct(id) {
         comment.textContent = review.comment
 
         const name = _("p")
-        const date = review.date.substring(0, 10) // (start, end - 1)
+        const date = review.date.substring(0, 10)
         name.textContent = review.reviewerName + " - " + date
 
         reviewBox.appendChild(stars)
@@ -280,8 +290,15 @@ function makeStar(rating) {
     } else {
         return "☆☆☆☆☆"
     }
+
+    const closeXButton = $("#closeXButton")
+    closeXButton.addEventListener("click", () => {
+        about.close() // lab9b
+    })
 }
 
 
 
 showFeatured() // bruh it had to be called, took me long for no reason
+
+
