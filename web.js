@@ -44,7 +44,8 @@ for (let product of products) {
             alert("Product ID: " + product.id + "\nProduct Title: " + product.title)
         })
 
-        img.addEventListener('click', () => {
+        img.addEventListener('click', (event) => {
+            event.preventDefault()
             showProduct(product.id)
         })
 
@@ -166,121 +167,123 @@ function showFeatured() {
         }
     }
 
-    // single product
+}
 
-    let currentProductId // needs this for the actual product for the view 
+// single product
 
-
-    const specsTab = $("#specifiTab")
-    const reviewTab = $("#reviewTab")
-    const specs = $("#specs")
-    const reviews = $("#reviews")
-    // tabs
-
-    function showSpecsTab() {
-        specs.classList.remove("hide")
-        reviews.classList.add("hide")
-    }
-
-    function showReviewTab() {
-        reviews.classList.remove("hide")
-        specs.classList.add("hide")
-    }
-
-    specsTab.addEventListener("click", showSpecsTab)
-    reviewTab.addEventListener("click", showReviewTab)
+let currentProductId // needs this for the actual product for the view 
 
 
-    function showProduct(id) {
-        currentProductId = id
+const specsTab = $("#specifiTab")
+const reviewTab = $("#reviewTab")
+const specs = $("#specs")
+const reviews = $("#reviews")
+// tabs
 
-        let product
+function showSpecsTab() {
+    specs.classList.remove("hide")
+    reviews.classList.add("hide")
+}
 
-        for (let p of products) {
-            if (p.id === id) {
-                product = p
-            }
-        }
+function showReviewTab() {
+    reviews.classList.remove("hide")
+    specs.classList.add("hide")
+}
 
-        $("#breadcrumb").textContent = "Home > " + product.category + " > " + product.title
-        $("#detailImage").setAttribute("src", product.images[0])
-        $("#detailImage").setAttribute("alt", product.title)
-        $("#detailTitle").textContent = product.title
-        $("#detailPrice").textContent = "$" + product.price.toFixed(2)
-        $("#detailSku").textContent = "SKU: " + product.sku + " " + makeStar(product.rating)
-        $("#detailDescription").textContent = product.description
-        $("#quantity").value = 1
-
-        // stock
-        if (product.stock > 0) {
-            $("#detailStock").textContent = "In Stock"
-        } else {
-            $("#detailStock").textContent = "Out of Stock"
-        }
-
-        // specifications section
-        $("#weight").textContent = "Weight: " + product.weight + " lb"
-        $("#dimensions").textContent = "Dimensions: " + product.dimensions.width + " x "
-            + product.dimensions.height + " x " + product.dimensions.depth + " cm"
-        $("#warranty").textContent = "Warranty: " + product.warrantyInformation
-        $("#shippingInfo").textContent = "Shipping: " + product.shippingInformation
-        $("#returnPolicy").textContent = "Return Policy: " + product.returnPolicy
-
-        // review section
-        reviews.textContent = ""
-        for (let review of product.reviews) {
-            const reviewBox = _("div")
-            reviewBox.classList.add("review")
-
-            const stars = _("p")
-            stars.classList.add("stars")
-            stars.textContent = makeStar(review.rating)
-
-            const comment = _("p")
-            comment.textContent = review.comment
-
-            const name = _("p")
-            const date = review.date.substring(0, 10)
-            name.textContent = review.reviewerName + " - " + date
-
-            reviewBox.appendChild(stars)
-            reviewBox.appendChild(comment)
-            reviewBox.appendChild(name)
-            reviews.appendChild(reviewBox)
-        }
-
-        // tags
-        const tagBox = $("#detailTags")
-        tagBox.textContent = ""
-        for (let tag of product.tags) {
-            const tagItem = _("span")
-            tagItem.classList.add("tagItem")
-            tagItem.textContent = tag
-            tagBox.appendChild(tagItem)
-        }
-
-        showSpecsTab()
-        showView("singleProduct")
+specsTab.addEventListener("click", showSpecsTab)
+reviewTab.addEventListener("click", showReviewTab)
 
 
-    }
+function showProduct(id) {
+    currentProductId = id
 
-    function makeStar(rating) {
-        if (rating >= 4.5) {
-            return "★★★★★"
-        } else if (rating >= 3.5) {
-            return "★★★★☆"//1 empty
-        } else if (rating >= 2.5) {
-            return "★★★☆☆" // 2 empty
-        } else if (rating >= 1.5) {
-            return "★★☆☆☆" // 3 empty
-        } else if (rating >= 0.5) {
-            return "★☆☆☆☆" // 4 empty
-        } else {
-            return "☆☆☆☆☆" // 5 empty
+    let product
+
+    for (let p of products) {
+        if (p.id === id) {
+            product = p
         }
     }
+
+    $("#breadcrumb").textContent = "Home > " + product.category + " > " + product.title
+    $("#detailImage").setAttribute("src", product.images[0])
+    $("#detailImage").setAttribute("alt", product.title)
+    $("#detailTitle").textContent = product.title
+    $("#detailPrice").textContent = "$" + product.price.toFixed(2)
+    $("#detailSku").textContent = "SKU: " + product.sku + " " + makeStar(product.rating)
+    $("#detailDescription").textContent = product.description
+    $("#quantity").value = 1
+
+    // stock
+    if (product.stock > 0) {
+        $("#detailStock").textContent = "In Stock"
+    } else {
+        $("#detailStock").textContent = "Out of Stock"
+    }
+
+    // specifications section
+    $("#weight").textContent = "Weight: " + product.weight + " lb"
+    $("#dimensions").textContent = "Dimensions: " + product.dimensions.width + " x "
+        + product.dimensions.height + " x " + product.dimensions.depth + " cm"
+    $("#warranty").textContent = "Warranty: " + product.warrantyInformation
+    $("#shippingInfo").textContent = "Shipping: " + product.shippingInformation
+    $("#returnPolicy").textContent = "Return Policy: " + product.returnPolicy
+
+    // review section
+    reviews.textContent = ""
+    for (let review of product.reviews) {
+        const reviewBox = _("div")
+        reviewBox.classList.add("review")
+
+        const stars = _("p")
+        stars.classList.add("stars")
+        stars.textContent = makeStar(review.rating)
+
+        const comment = _("p")
+        comment.textContent = review.comment
+
+        const name = _("p")
+        const date = review.date.substring(0, 10)
+        name.textContent = review.reviewerName + " - " + date
+
+        reviewBox.appendChild(stars)
+        reviewBox.appendChild(comment)
+        reviewBox.appendChild(name)
+        reviews.appendChild(reviewBox)
+    }
+
+    // tags
+    const tagBox = $("#detailTags")
+    tagBox.textContent = ""
+    for (let tag of product.tags) {
+        const tagItem = _("span")
+        tagItem.classList.add("tagItem")
+        tagItem.textContent = tag
+        tagBox.appendChild(tagItem)
+    }
+
+    showSpecsTab()
+    showView("singleProduct")
+
 
 }
+
+function makeStar(rating) {
+    if (rating >= 4.5) {
+        return "★★★★★"
+    } else if (rating >= 3.5) {
+        return "★★★★☆"//1 empty
+    } else if (rating >= 2.5) {
+        return "★★★☆☆" // 2 empty
+    } else if (rating >= 1.5) {
+        return "★★☆☆☆" // 3 empty
+    } else if (rating >= 0.5) {
+        return "★☆☆☆☆" // 4 empty
+    } else {
+        return "☆☆☆☆☆" // 5 empty
+    }
+}
+
+
 
 showFeatured() // bruh it had to be called, took me long for no reason
