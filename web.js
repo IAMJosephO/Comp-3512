@@ -27,7 +27,7 @@ for (let product of products) {
         img.setAttribute('alt', product.title)
         img.classList.add('thumbnail')
 
-        const title = _('p')
+        const title = _('a')
         title.setAttribute('href', '#singleProduct')
         title.classList.add('productTitle')
         title.textContent = product.title;
@@ -74,19 +74,17 @@ function showView(viewName) {
     }
 
     //show what we actually want 
-    const sel = "#" + viewName
-    const viewToShow = $(sel)
+    const viewToShow = document.getElementById(viewName)
     viewToShow.classList.remove("hide")
 }
 
 
 const links = $$(".navLink")
 
-for (const link of links) {
+for (let link of links) {
     link.addEventListener("click", (event) => {
         event.preventDefault()
-        const viewName = link.getAttribute("href").substring(1)
-        showView(viewName)
+        showView(link.dataset.view)
     })
 }
 
@@ -99,7 +97,7 @@ const closeButtonAbout = $("#closeButtonAbout")
 
 aboutLink.addEventListener("click", (event) => { //open from header linker
     event.preventDefault()
-    about.classList.remove("hide")
+    about.showModal() // lab 9b
 })
 
 // open from footer
@@ -110,7 +108,8 @@ aboutLinkFooter.addEventListener("click", (event) => {
 })
 
 closeButtonAbout.addEventListener("click", (event) => { // close section button
-    about.classList.add("hide")
+    event.preventDefault()
+    about.close()// lab 9
 })
 
 
@@ -203,7 +202,7 @@ function showProduct(id) {
         if (p.id === id) {
             product = p
         }
-    }
+    } // need to find the product and match it so function can grab the title, price, image
 
     $("#breadcrumb").textContent = "Home > " + product.category + " > " + product.title
     $("#detailImage").setAttribute("src", product.images[0])
@@ -212,8 +211,7 @@ function showProduct(id) {
     $("#detailPrice").textContent = "$" + product.price.toFixed(2)
     $("#detailSku").textContent = "SKU: " + product.sku + " " + makeStar(product.rating)
     $("#detailDescription").textContent = product.description
-    $("#quantity").value = 1
-
+    $("#quantity")
     // stock
     if (product.stock > 0) {
         $("#detailStock").textContent = "In Stock"
@@ -243,7 +241,7 @@ function showProduct(id) {
         comment.textContent = review.comment
 
         const name = _("p")
-        const date = review.date.substring(0, 10)
+        const date = review.date.substring(0, 10) // (start, end - 1)
         name.textContent = review.reviewerName + " - " + date
 
         reviewBox.appendChild(stars)
@@ -272,15 +270,15 @@ function makeStar(rating) {
     if (rating >= 4.5) {
         return "★★★★★"
     } else if (rating >= 3.5) {
-        return "★★★★☆"//1 empty
+        return "★★★★☆"
     } else if (rating >= 2.5) {
-        return "★★★☆☆" // 2 empty
+        return "★★★☆☆"
     } else if (rating >= 1.5) {
-        return "★★☆☆☆" // 3 empty
+        return "★★☆☆☆"
     } else if (rating >= 0.5) {
-        return "★☆☆☆☆" // 4 empty
+        return "★☆☆☆☆"
     } else {
-        return "☆☆☆☆☆" // 5 empty
+        return "☆☆☆☆☆"
     }
 }
 

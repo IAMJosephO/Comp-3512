@@ -12,42 +12,41 @@
 
 <body>
     <header>
-        <a href="#home" class="navLink">Corner Cart</a>
+        <a href="#home" class="navLink" data-view="home">Corner Cart</a>
         <nav>
-            <a href="#home" class="navLink">Home</a>
-            <a href="#browse" class="navLink">Browse</a>
-            <a href="#about" id="aboutLink">About</a>
+            <a href="#home" class="navLink" data-view="home">Home</a>
+            <a href="#browse" class="navLink" data-view="browse">Browse</a>
+            <a href="#about" id="aboutLink" data-view="cart">About</a>
         </nav>
-        <a href="#cart" class="navLink">Cart
+        <a href="#cart" class="navLink" data-view="cart">Cart
             <span id="cartCount">0</span>
         </a>
     </header>
 
     <main>
-        <!-- Im using uniqlo as a reference, like a smaller version of it ( nike and zara was too hard lol)-->
+        <!-- uniqlo as a reference, like a smaller version of it -->
         <section id="home" class="view">
             <div id="mainPart">
                 <h1>Essentials</h1>
-                <a href="#browse" class="navLink" id="shopNow">Shop Now</a>
+                <a href="#browse" class="navLink" id="shopNow" data-view="browse">Shop Now</a>
             </div>
 
             <div id="perks">
                 <p>Free Shipping over $200</p>
                 <p>Ships Worldwide</p>
-                <p>Your Cart is Saved</p>
             </div>
 
             <h2>Shop by Category</h2>
             <div id="categories">
-                <a href="#browse" class="navLink">Beauty</a>
-                <a href="#browse" class="navLink">Fragrance</a>
-                <a href="#browse" class="navLink">Furniture</a>
-                <a href="#browse" class="navLink">Groceries</a>
+                <a href="#browse" class="navLink" data-view="browse">Beauty</a>
+                <a href="#browse" class="navLink" data-view="browse">Fragrance</a>
+                <a href="#browse" class="navLink" data-view="browse">Furniture</a>
+                <a href="#browse" class="navLink" data-view="browse">Groceries</a>
             </div>
 
             <h2>Featured Products</h2>
             <section id="featured"></section>
-            <!--I want to display the only a numbered amount of items on the screen -->
+
         </section>
 
         <section id="browse" class="view hide">
@@ -76,7 +75,7 @@
                     <p id="detailDescription"></p>
 
                     <div id="addCart">
-                        <label>Quality
+                        <label>Quantity
                             <input type="text" id="quantity" value="1">
                             <button type="button" id="addToCartBtn">+ Add to Cart</button>
                         </label>
@@ -108,7 +107,7 @@
     </footer>
 
     <!-- About pop up part-->
-    <dialog id="about" class="hide">
+    <dialog id="about">
         <h2> About Corner Cart</h2>
         <p>Corner Cart: Online shopping store; COMP 3512 Assignment 2</p>
         <p>Why go to a corner store when you now have one in your hands!</p>
