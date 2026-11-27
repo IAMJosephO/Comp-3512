@@ -66,8 +66,8 @@ for (let product of products) {
 
 }
 
-// cart section
-let cart = []
+// cart
+let cart = [] = JSON.parse(localStorage.getItem("cart")) || [] // lab 10
 
 
 
@@ -290,26 +290,158 @@ function makeStar(rating) {
     } else {
         return "☆☆☆☆☆"
     }
+}
 
-    const closeXButton = $("#closeXButton")
-    closeXButton.addEventListener("click", () => {
-        about.close() // lab9b
-    })
+const closeXButton = $("#closeXButton")
+closeXButton.addEventListener("click", () => {
+    about.close() // lab9b
+})
 
+// cart
+function findProduct(id) { // find
+    const match = products.find(p => p.id == id)
+    return match
+}
 
+function saveCart() {
+    localStorage.setItem("cart", JSON.stringify(cart))
+}
 
-    async function getData() {
-        try {
-            const resp = await fetch(url)
-            if (resp.ok) {
-                const data = await resp.json()
-                // do something with code
-            } else {
-                throw new Error("fetch failed")
-            }
-        } catch {
-            // handle error
+//what i need: 
+//      the count
+//      add to cart
+//      remove from the actual cart
+//      get the shipping
+//      need the summary part it 
+//      show the cart
+//      check out
+//      toast message
+
+function showCartCount() {
+    let count = 0
+
+    for (let item of cart) {
+        count += item.quantity
+    }
+
+    $("#cartCount").textContent = count
+}
+
+function addToCart(id, quantity) {
+    const item = cart.find(p => p.id === id)
+    if (item) {
+        item.quantity += quantity
+    } else {
+        cart.push({ id: id, quantity: quantity })
+    }
+
+    saveCart()
+    showCartCount()
+}
+
+function removeFromCArt(id) {
+    cart = cart.filter(i => i.id !== id)
+    saveCart()
+    showCartCount()
+}
+
+function getShipping(merchandise) {
+    const type = $("#shippingType").value
+    const destination = $("#shippingDestination").value
+
+    if (merchandise > 500) { // if 
+        return 0
+    }
+
+    if (type == "Standard") {
+        if (destination === "Canada") {
+            return 10
+        } else if (destination === "United States") {
+            return 15
+        } else {
+            return 20
+        }
+    } else if (type === "Express") {
+        if (destination === "International") {
+            return 30
+        } else {
+            return 25
+        }
+    } else {
+        if (destination == "Canada") {
+            return 35
+        } else {
+            return 50
         }
     }
 
-    showFeatured() // bruh it had to be called, took me long for no reason
+}
+
+function showSummary(merchandise) {
+    const type = $("#shippingType").value
+    const destination = $("#shippingDestination").value
+
+    let shipping = 0 // cost value 
+
+    if (merchandise > 500) {
+        shipping = 0
+    } else if (type == "Standard") {
+        if (destination == "Canada") {
+            shipping = 10
+        } else if (destination === "United States") {
+            shipping = 15
+        } else {
+            shipping = 20
+        }
+
+    } else if (type === "Express") {
+        if (destination === "International") {
+            shipping = 30
+        } else {
+            shipping = 25
+        }
+    } else {
+        if (destination == "Canada") {
+            shipping = 25
+        }
+    }
+
+    let tax = 0
+    if (destination === "Canada") {
+        tax = merchandise * 0.05
+    }
+
+    const total = merchandise + shipping + tax
+
+    $("#merchandise").textContent = "$" + merchandise.toFixed(2)
+    $("#shippingCost").textContent = "$" + shipping.toFixed(2)
+    $("#tax").textContent = "$" + tax.toFixed(2)
+    $("#total").textContent = "$" + total.toFixed(2)
+
+}
+
+const url = "https://dummyjson.com/products?limit=100"
+
+async function getData() {
+    try {
+        const resp = await fetch(url)
+
+        if (resp.ok) {
+            const data = await resp.json()
+            // do something with data
+            products = data.products
+            localStorage.setItem("products", JSON.stringify(products)) // lab 10
+        } else {
+            throw new Error("fetch failed")
+        }
+
+        showFeatured() // get data has to finish before this function so when the data is ready
+    } catch (err) {
+        // handle error
+        console.error(err)
+    }
+}
+
+getData()
+
+// showFeatured() // bruh it had to be called, took me long for no reason
