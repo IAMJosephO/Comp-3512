@@ -345,37 +345,6 @@ function removeFromCArt(id) {
     showCartCount()
 }
 
-function getShipping(merchandise) {
-    const type = $("#shippingType").value
-    const destination = $("#shippingDestination").value
-
-    if (merchandise > 500) { // if 
-        return 0
-    }
-
-    if (type == "Standard") {
-        if (destination === "Canada") {
-            return 10
-        } else if (destination === "United States") {
-            return 15
-        } else {
-            return 20
-        }
-    } else if (type === "Express") {
-        if (destination === "International") {
-            return 30
-        } else {
-            return 25
-        }
-    } else {
-        if (destination == "Canada") {
-            return 35
-        } else {
-            return 50
-        }
-    }
-
-}
 
 function showSummary(merchandise) {
     const type = $("#shippingType").value
