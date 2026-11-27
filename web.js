@@ -41,7 +41,7 @@ for (let product of products) {
         btn.textContent = '+'
 
         btn.addEventListener('click', () => {
-            alert("Product ID: " + product.id + "\nProduct Title: " + product.title)
+            addToCart(product.id, 1)
         })
 
         img.addEventListener('click', (event) => {
@@ -86,6 +86,9 @@ function showView(viewName) {
     //show what we actually want 
     const viewToShow = document.getElementById(viewName)
     viewToShow.classList.remove("hide")
+    if (viewName === "cart") {
+        showCart()
+    }
 }
 
 
@@ -153,7 +156,7 @@ function showFeatured() {
             btn.textContent = '+'
 
             btn.addEventListener('click', () => {
-                alert("Product ID: " + product.id + "\nProduct Title: " + product.title)
+                addToCart(product.id, 1)
             })
 
             img.addEventListener('click', () => {
@@ -311,8 +314,7 @@ function saveCart() {
 //      the count
 //      add to cart
 //      remove from the actual cart
-//      get the shipping
-//      need the summary part it 
+//      get the shipping and summary
 //      show the cart
 //      check out
 //      toast message
@@ -339,10 +341,11 @@ function addToCart(id, quantity) {
     showCartCount()
 }
 
-function removeFromCArt(id) {
+function removeFromCart(id) {
     cart = cart.filter(i => i.id !== id)
     saveCart()
     showCartCount()
+    showCart()
 }
 
 
@@ -371,7 +374,9 @@ function showSummary(merchandise) {
         }
     } else {
         if (destination == "Canada") {
-            shipping = 25
+            shipping = 35
+        } else {
+            shipping = 50
         }
     }
 
@@ -387,6 +392,68 @@ function showSummary(merchandise) {
     $("#tax").textContent = "$" + tax.toFixed(2)
     $("#total").textContent = "$" + total.toFixed(2)
 
+}
+
+function showCart() {
+    const cartItems = $("#cartItems")
+    cartItems.textContent = ""
+
+    let merchandise = 0
+    for (let item of cart) {
+        const product = products.find(p => p.id === item.id)
+        const subtotal = product.price * item.quantity
+        merchandise += subtotal
+
+        const row = _("tr")
+        const removeTd = _("td")
+        const removeBtn = _("button")
+        removeBtn.textContent = "X"
+        removeBtn.addEventListener("click", () => {
+            removeFromCart(item.id)
+        })
+        removeTd.appendChild(removeBtn)
+        const imageTd = _('td')
+        const img = _("img")
+        img.setAttribute("src", product.thumbnail)
+        img.setAttribute("alt", product.title)
+        imageTd.appendChild(img)
+
+        const titleTd = _("td")
+        titleTd.textContent = product.title
+        const priceTd = _("td")
+        priceTd.textContent = "$" + product.price.toFixed(2)
+        const quantityTd = _("td")
+        quantityTd.textContent = item.quantity
+        const subTotalTd = _("td")
+        subTotalTd.textContent = "$" + subtotal.toFixed(2)
+
+        row.appendChild(removeTd)
+        row.appendChild(imageTd)
+        row.appendChild(titleTd)
+        row.appendChild(priceTd)
+        row.appendChild(quantityTd)
+        row.appendChild(subTotalTd)
+        cartItems.appendChild(row)
+
+    }
+    if (cart.length === 0) { //empty cart
+        $("#emptyCart").classList.remove("hide")
+        $("#cartTable").classList.add("hide")
+        $("#cartBottom").classList.add("hide")
+    } else {
+        $("#emptyCart").classList.add("hide")
+        $("#cartTable").classList.remove("hide")
+        $("#cartBottom").classList.remove("hide")
+    }
+
+    showSummary(merchandise)
+}
+
+function checkout() {
+    cart = []
+    saveCart()
+    showCartCount()
+    showView("home")
 }
 
 const url = "https://dummyjson.com/products?limit=100"
@@ -412,5 +479,6 @@ async function getData() {
 }
 
 getData()
+showCartCount()
 
 // showFeatured() // bruh it had to be called, took me long for no reason
