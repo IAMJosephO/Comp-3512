@@ -295,10 +295,21 @@ function makeStar(rating) {
     closeXButton.addEventListener("click", () => {
         about.close() // lab9b
     })
-}
 
 
 
-showFeatured() // bruh it had to be called, took me long for no reason
+    async function getData() {
+        try {
+            const resp = await fetch(url)
+            if (resp.ok) {
+                const data = await resp.json()
+                // do something with code
+            } else {
+                throw new Error("fetch failed")
+            }
+        } catch {
+            // handle error
+        }
+    }
 
-
+    showFeatured() // bruh it had to be called, took me long for no reason
