@@ -24,7 +24,7 @@
     </header>
 
     <main>
-        <!-- uniqlo as a reference, like a smaller version of it -->
+        <!-- uniqlo as a reference, -->
         <section id="home" class="view">
             <div id="mainPart">
                 <h1>Essentials</h1>
@@ -51,7 +51,61 @@
 
         <section id="browse" class="view hide">
             <h1>Browse</h1>
-            <section id="productList"></section>
+
+            <div id="browseLayout">
+                <div id="filter">
+                    <h2>Department</h2>
+
+                    <div class="filterGroup">
+                        <div class="filterTitle">Name</div>
+                        <div class="filterMain">
+                            <input type="text" id="nameFilter" placeholder="What Are You Looking For..?">
+                        </div>
+                    </div>
+
+                    <div class="filterGroup">
+                        <div class="filterTitle">Category</div>
+                        <div class="filterMain" id="categoryFilter"></div>
+                    </div>
+
+                    <div class="filterGroup">
+                        <div class="filterTitle">Rating</div>
+                        <div class="filterMain" id="ratingFilter">
+                            <select id="ratingSelect">
+                                <option value="0">All Rating</option>
+                                <option value="4">Excellent</option>
+                                <option value="3">Good</option>
+                                <option value="2">Fair</option>
+                                <option value="1">Any</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="filterGroup">
+                        <div class="filterTitle">Price</div>
+                        <div class="filterMain">
+                            <label>Over $ <input type="number" id="priceOver"></label>
+                            <label>Under $ <input type="number" id="priceUnder"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="results">
+                    <div id="resultsBar">
+                        <p id="resultCount"></p>
+                        <button type="button" id="clearFilter">X Clear All</button>
+                        <label for="SortBy">
+                            <select id="SortBy">
+                                <option value="name">Name (A-Z)</option>
+                                <option value="price">Price</option>
+                                <option value="category">Category</option>
+                            </select>
+                        </label>
+                    </div>
+                    <section id="productList"></section>
+                    <p id="noResults" class="hide">No Products Match Your filter</p>
+                </div>
+            </div>
         </section>
 
         <section id="cart" class="view hide">
@@ -78,9 +132,9 @@
                         <option value="priority">Priority</option>
                     </select>
                     <select id="shippingDestination">
-                        <option value="canada">Canada</option>
-                        <option value="united States">United States</option>
-                        <option value="international">International</option>
+                        <option value="Canada">Canada</option>
+                        <option value="United States">United States</option>
+                        <option value="International">International</option>
                     </select>
                 </div>
                 <div id="summary">
@@ -166,7 +220,6 @@
         <p><a href="https://github.com/IAMJosephO/Comp-3512" target="_blank">GitHub Repository</a></p>
         <button type="button" id="closeButtonAbout">Close</button>
     </dialog>
-    <div id="notice"></div>
 </body>
 
 </html>

@@ -449,12 +449,16 @@ function showCart() {
     showSummary(merchandise)
 }
 
-function checkout() {
+function checkOut() {
     cart = []
     saveCart()
     showCartCount()
     showView("home")
 }
+
+$("#checkoutBtn").addEventListener("click", checkOut)
+
+$("#shippingChoices").addEventListener("input", showCart)
 
 const url = "https://dummyjson.com/products?limit=100"
 
